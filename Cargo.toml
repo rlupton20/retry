@@ -1,0 +1,9 @@
+[package]
+name = "retry"
+version = "0.1.0"
+authors = ["Richard Lupton <richard.lupton@gmail.com>"]
+# edition = "2018"
+
+[dependencies]
+quicli = "0.3"
+failure = "0.1.2"
