@@ -1,0 +1,28 @@
+sudo: required
+services:
+  - docker
+os:
+  - linux
+  - osx
+
+language: rust
+rust:
+  - stable
+  - beta
+  - nightly
+matrix:
+  allow_failures:
+    - rust: nightly
+  fast_finish: true
+
+before_deploy: "./build-release retry ${TRAVIS_TAG}-${TRAVIS_OS_NAME}"
+deploy:
+  provider: releases
+  api_key:
+    secure: fMPDyEdR06rKkrgKiQM7RInhyqiGKB3Xw2vrqvEvQQ+Q+uLVc67k3CgRsdHL99bWBsuHadKUOEsAKDd66IMGqvjG5i03IHFl8uIKL7Gfguwfslt2j9brN48drFRU9C9fnYEBtawJb19wvoaC/vZbXFomgf3ku7aruREuBYrIIrMhyDOG2Tb6nwQS4V7AgblsAF9/qEhwumSWE1kCmO0ll/4G09Pf9w1/J5anv+9P2u+Ku4Opqq/wl5HP8VPmqyDvTlmUd7UM7J3QOZ7cxOqnxnREI/TynfmHA8CMY2aZMI42iCUBvulMH3TiIW3sdzHFme0vKRJHRJSxDapyAO0ahCRuq5avmnV1GYyM2rwasRkP6eOZz0ywWZ0way0zVBR5MGLuAkiBRzmybYwMIvwO5kKmt5fQtbIYm+JPtobB3X3aBkwkrxFY+Q4iQDKfLYioGVwYI5SIQ62uTJCvmuKAPxEayXzdwOgV9B16C9eGKVM5N936jpRtjhvK8it4EFaaPuRQkKJF2rDvtexOd0Z1qPeY72fam/yRyLjTGiXtXKrM26S2oOk1Hgw8yKKZB6BUEd4s/uwzBIKxY0OGe47ewCPCVMLb20x4oBlucIjd5D7na+XcXgmCZJhh63sYg50DzgrpL5xWpTSq8RYOEdQ07dmPBWiogZuvM0lcrV/TYtU=
+  file_glob: true
+  file: "retry-${TRAVIS_TAG}-${TRAVIS_OS_NAME}.*"
+  skip_cleanup: true
+  on:
+    rust: stable
+    tags: true
